@@ -73,6 +73,10 @@ private slots:
     void on_actionAppExit_triggered();
     void on_systemTray_stateChanged(int arg1);
 
+    void on_actionHelpAboutThisProgram_triggered();
+
+    void on_actionHelpAboutQt_triggered();
+
 private:
     ProgramState progState = NoState;
     Ui::MainWindow *ui = nullptr;

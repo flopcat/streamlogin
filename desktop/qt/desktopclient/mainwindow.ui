@@ -77,18 +77,26 @@
    </property>
    <widget class="QMenu" name="menuApp">
     <property name="title">
-     <string>App</string>
+     <string>&amp;App</string>
     </property>
     <addaction name="actionAppExit"/>
    </widget>
    <widget class="QMenu" name="menuAccounts">
     <property name="title">
-     <string>Accounts</string>
+     <string>A&amp;ccounts</string>
     </property>
     <addaction name="actionAccountsEdit"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionHelpAboutThisProgram"/>
+    <addaction name="actionHelpAboutQt"/>
+   </widget>
    <addaction name="menuApp"/>
    <addaction name="menuAccounts"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizePolicy">
@@ -100,12 +108,22 @@
   </widget>
   <action name="actionAppExit">
    <property name="text">
-    <string>Exit</string>
+    <string>E&amp;xit</string>
    </property>
   </action>
   <action name="actionAccountsEdit">
    <property name="text">
     <string>Edit</string>
+   </property>
+  </action>
+  <action name="actionHelpAboutThisProgram">
+   <property name="text">
+    <string>&amp;About This Program...</string>
+   </property>
+  </action>
+  <action name="actionHelpAboutQt">
+   <property name="text">
+    <string>About &amp;Qt...</string>
    </property>
   </action>
  </widget>

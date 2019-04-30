@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 #include <QLabel>
 #include <QMap>
+#include <QMessageBox>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QSessionManager>
@@ -299,4 +300,37 @@ void MainWindow::on_systemTray_stateChanged(int arg1)
     (void)arg1;
     if (trayIcon)
         trayIcon->setVisible(ui->systemTray->isChecked());
+}
+
+void MainWindow::on_actionHelpAboutThisProgram_triggered()
+{
+    QString title = "About " + QCoreApplication::applicationName();
+    QString text = R"EOF(<h2>%1</h2>
+<p>A desktop client for a StreamLogin server.
+<br>Version %2
+<br>Built with Qt %3
+
+<h3>LICENSE</h3>
+<p>Copyright (C) 2019
+<p>This program is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public License as
+   published by the Free Software Foundation; either version 2 of
+   the License, or (at your option) any later version.
+<p>This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+<p>You should have received a copy of the GNU General Public
+   License along with this program; if not, write to the Free
+   Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA 02110-1301 USA.")EOF";
+    text = text.arg(QCoreApplication::applicationName(),
+                    VERSION_STRING,
+                    qVersion());
+    QMessageBox::about(this, title, text);
+}
+
+void MainWindow::on_actionHelpAboutQt_triggered()
+{
+    QMessageBox::aboutQt(this);
 }
