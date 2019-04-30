@@ -61,13 +61,16 @@ The url can be changed live by making a POST request to
 {
   'action': 'set',
   'username': 'mystream',
+  'password': 'mypassword',
   'tld': 'my_public_ip_address',
   'port': '8000',
   'path': 'path/to/my/stream.mp3'
   'text': 'link text'
 }
-
 ```
+
+When the password field is an empty string, the account is removed from the
+server.
 
 ## Desktop client
 
@@ -111,8 +114,8 @@ This desktop client is only partially writen.
 
 ### Qt desktop client
 
-Accounts are stored in an xml file in the program's ____ directory.  These
-accounts may be edited from within the program.
+Accounts are stored in an xml file in the program's executable directory.
+These accounts may be edited from within the program.
 
 Each account has two states, active and inactive.  Each state has a display
 text field for the username's link, and checkbox indicating which ip address
