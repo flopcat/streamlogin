@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "accountsdialog.h"
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QFile>
 #include <QStyleFactory>
 
@@ -10,7 +11,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("Flopcat");
     QCoreApplication::setOrganizationDomain("desktopclient.streamlogin.flopcat");
     QCoreApplication::setApplicationName("StreamLogin Desktop Client");
-    QGuiApplication::setWindowIcon(QIcon(":/icon-logo.svg"));
+    QCoreApplication::setApplicationVersion(VERSION_STRING);
+
+    QCommandLineParser parser;
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.process(a);
+
+    a.setWindowIcon(QIcon(":/icon-logo.svg"));
     a.setQuitOnLastWindowClosed(false);
 
 #ifdef Q_OS_LINUX
