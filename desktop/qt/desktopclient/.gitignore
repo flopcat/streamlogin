@@ -1,0 +1,6 @@
+*.pro.*
+Makefile*
+build
+release
+.qmake.stash
+

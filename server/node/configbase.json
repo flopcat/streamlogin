@@ -1,0 +1,14 @@
+{
+    "header": "Please edit<br>config.json",
+    "footer": "Please copy configbase.json to config.json and edit as appropriate.",
+    "welcome": "Welcome",
+    "formUser": "username",
+    "formPass": "password",
+    "login": "LOGIN",
+    "incorrect": "incorrect login",
+    "success": "Please click the folowing link",
+    "username": "hackme",
+    "password": "hackme",
+    "urlDefault": "hackme",
+    "urlAssignSecret": "hackme"
+}
