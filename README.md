@@ -27,7 +27,9 @@ appropriate.  Please change the defaults to something suitable.  For example:
 Note that `urlAssignSecret` should be sufficently long, random, and plain
 text.  It should be from the range [0-9,A-Z,a-z] and contain more than 16
 letters.  Do not use the example secret above, make your own.  Mashing the
-keyboard and removing non-alphanumeric characters should be fine.
+keyboard and removing non-alphanumeric characters should be fine.  You may
+also consider visiting [https://www.random.org/strings/] and joining a few
+strings together.
 
 Likewise, copy `usersbase.json` to `users.json` and edit as appropriate.  For
 example, the following will provide a simple stream link.
@@ -37,22 +39,24 @@ example, the following will provide a simple stream link.
   "mystream": {
     "password": "mypassword",
     "link": "http://5.6.7.8:8000/stream",
-    "text": "mp3 stream"
+    "text": "mp3 stream",
+    "rel": "audio"
   }
 }
 ```
 
 The username and password probably do not need to be as secure, but keep
-discretion, security and useablity in mind.
+discretion, security and useablity in mind.  If you are using the desktop
+client, consider making this an empty dictionary (`{ }`) instead.
 
-Run the server on a node server in the cloud.
+Run the server on a node server in the cloud, or on a local box.
 
 >cd node
 
->node server.js
+>node server.js \[*myport* (optional)\]
 
-Logging in with the correct username and password will display the configured
-url.
+Opening your browser and logging in with the correct username and password
+will display the configured url.
 
 The url can be changed live by making a POST request to
 `http://myserver.somewhere/urlAssignSecret', with the following (example) data:
@@ -64,8 +68,9 @@ The url can be changed live by making a POST request to
   'password': 'mypassword',
   'tld': 'my_public_ip_address',
   'port': '8000',
-  'path': 'path/to/my/stream.mp3'
-  'text': 'link text'
+  'path': 'path/to/my/stream.mp3',
+  'text': 'link text',
+  'rel': 'href'
 }
 ```
 
@@ -118,13 +123,15 @@ Accounts are stored in an xml file in the program's executable directory.
 These accounts may be edited from within the program.
 
 Each account has two states, active and inactive.  Each state has a display
-text field for the username's link, and checkbox indicating which ip address
-the path-related modes will use, and four modes:
+text field, url field, path-related fields, and checkboxes indicating which ip
+address the path-related modes will use.
 
-* url.  The username's display link will have this url
+* type. The sort of information to be presented. (text, link, audio, video)
+* text. The display text associated with the state.
+* url.  The username's link (if used) will have this url
 * path+port.  Same, but use a path+port on a specific ip (client or server)
 * path.  Same, but use a path on a specific ip (client or server)
-* none.  The link goes nowhere.
+* ip.   The path(+path) should use the client or server address.
 
 path+port and path options in conjuction with client ip are useful for
 port-forwarding using your router.  path+port and path options with server ip
