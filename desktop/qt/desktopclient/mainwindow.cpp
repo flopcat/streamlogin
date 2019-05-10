@@ -99,10 +99,9 @@ void MainWindow::setupUi()
 
 void MainWindow::setupSessionManager()
 {
-    /*
     connect(qApp, &QGuiApplication::commitDataRequest,
-            this, &MainWindow::sessionManager_shutdown);
-    */
+            qApp, &QCoreApplication::quit,
+            Qt::DirectConnection);
 }
 
 void MainWindow::setupTray()
@@ -172,8 +171,9 @@ void MainWindow::setMyIpAddress(const QString &ipAddress)
 
 void MainWindow::closeEvent(QCloseEvent *evt)
 {
-    if (progState != ShuttingDown) {
-
+    if (!ui->systemTray->isChecked()) {
+        qApp->quit();
+        return;
     }
     evt->accept();
 }
@@ -184,7 +184,7 @@ void MainWindow::activateServers()
         return;
     setProgState(SendingActivation);
     for (auto &a : Account::collection) {
-        QString url = "http://" + a.remote.hostname + "/" + a.remote.secret;
+        QString url = QString("http://%1:%2/%3").arg(a.remote.hostname, QString::number(a.remote.port), a.remote.secret);
         QByteArray json = a.json(Account::ActiveState, myIpAddress);
         QNetworkRequest req(url);
         req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -207,7 +207,7 @@ bool MainWindow::deactivateServers()
         setProgState(SendingDeactivation);
     }
     for (auto &a : Account::collection) {
-        QString url = "http://" + a.remote.hostname + "/" + a.remote.secret;
+        QString url = QString("http://%1:%2/%3").arg(a.remote.hostname, QString::number(a.remote.port), a.remote.secret);
         QByteArray json = a.json(Account::InactiveState, myIpAddress);
         QNetworkRequest req(url);
         req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

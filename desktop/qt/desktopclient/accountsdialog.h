@@ -12,7 +12,8 @@ class AccountsDialog;
 
 class Account {
 public:
-    enum LinkType { LinkUrl, LinkPortPath, LinkPath, LinkNone };
+    enum LinkRel { TextRel, HrefRel, AudioRel, VideoRel };
+    enum LinkType { LinkUrl, LinkPortPath, LinkPath };
     enum AccountState { ActiveState, InactiveState };
     class State {
     public:
@@ -22,10 +23,12 @@ public:
         QString path;
         bool    ipMine;
         LinkType type;
+        LinkRel rel;
     };
     class Remote {
     public:
         QString hostname;
+        int     port;
         QString secret;
         QString username;
         QString password;
