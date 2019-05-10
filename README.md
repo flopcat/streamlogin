@@ -28,8 +28,8 @@ Note that `urlAssignSecret` should be sufficently long, random, and plain
 text.  It should be from the range [0-9,A-Z,a-z] and contain more than 16
 letters.  Do not use the example secret above, make your own.  Mashing the
 keyboard and removing non-alphanumeric characters should be fine.  You may
-also consider visiting [https://www.random.org/strings/] and joining a few
-strings together.
+also consider visiting [random.org](https://www.random.org/strings/) and
+joining a few strings together.
 
 Likewise, copy `usersbase.json` to `users.json` and edit as appropriate.  For
 example, the following will provide a simple stream link.
@@ -59,7 +59,7 @@ Opening your browser and logging in with the correct username and password
 will display the configured url.
 
 The url can be changed live by making a POST request to
-`http://myserver.somewhere/urlAssignSecret', with the following (example) data:
+`http://myserver.somewhere/urlAssignSecret`, with the following (example) data:
 
 ```
 {
