@@ -44,19 +44,77 @@ const idPassword = "password";
 const idLogin = "login";
 const idNotice = "notice";
 const idMessage = "message";
+const idRel = "rel";
+
+const idText = "text";
 const idLink = "link";
+const idMedia = "media";
+
+const relText = "text";
+const relLink = "href";
+const relAudio = "audio";
+const relVideo = "video";
 
 function setMessage(m) {
-  document.getElementById(idMessage).innerHTML = m;
+  document.getElementById(idMessage).innerText = m;
 }
 function setNotice(n) {
-  document.getElementById(idNotice).innerHTML = n;
+  document.getElementById(idNotice).innerText = n;
+}
+function setText(t) {
+  document.getElementById(idText).innerText = t;
 }
 function setLink(href,text) {
   var l = document.getElementById(idLink);
   l.href = href !== '' ? href : '#';
   l.innerHTML = text;
 }
+function setMedia(href, text) {
+  var a = document.getElementById(idMedia);
+  a.src = href;
+  a.load();
+  a.play();
+  setMessage(text);
+}
+function switchRel(rel)
+{
+  var r = document.getElementById(idRel);
+  while (r.firstChild) {
+    r.removeChild(r.firstChild);
+  }
+  if (rel == relText) {
+    var n = document.createElement('span');
+    n.id = idText;
+    r.appendChild(n);
+  } else if (rel == relLink) {
+    var n = document.createElement('a');
+    n.id = idLink;
+    n.className = 'cb';
+    r.appendChild(n);
+  } else if (rel == relAudio || rel == relVideo) {
+    var n = document.createElement(rel == relAudio ? 'audio' : 'video');
+    n.id = idMedia;
+    n.autoplay = true;
+    n.controls = true;
+    n.preload = 'none';
+    r.appendChild(n);
+  } else {
+    console.log(`unknown rel type ${rel}`);
+  }
+}
+
+function setRel(rel, href, text)
+{
+  switchRel(rel);
+  if (rel === relText) {
+    setText(text);
+  } else if (rel === relLink) {
+    setLink(href,text);
+  } else if (rel === relAudio || rel === relVideo) {
+    setMedia(href,text);
+  }
+}
+
 function doNav(payload) {
   var data = JSON.parse(payload);
   if (typeof data.message !== "undefined") {
@@ -66,7 +124,28 @@ function doNav(payload) {
     setNotice(data.notice);
   }
   if (typeof data.link !== "undefined") {
-    setLink(data.link, typeof data.text !== "undefined" ? data.text : data.link);
+    if (typeof data.rel === "undefined") {
+      data.rel = relLink;
+    }
+    if (rel === relText) {
+      data.link = "#";
+    } else if (rel === relLink) {
+      if (typeof data.text === "undefined")
+        data.text = data.link;
+    } else if (rel === relAudio || rel === relVideo) {
+      if (typeof data.text === "undefined")
+        data.text = '';
+    }
+    // final sanitation
+    if (typeof data.link === "undefined") {
+      data.link = '#';
+    }
+    if (typeof data.text === "undefined") {
+      data.text = '';
+    }
+    setRel(data.rel, data.link, data.text);
+  } else {
+    setRel(relText, '', '#');
   }
 }
 function click() {
@@ -99,7 +178,7 @@ window.onload = load;
 <div><button id="login" class="i1 i2 i3 c3 final fb">$login</button><br></div>
 <div class="cr" id="notice"></div>
 <div class="" id="message"></div>
-<div><a href="" class="cb" id="link"></a></div>
+<div id="rel"></div>
 </div>
 <br>
 <div class="tiny d">$footer</div>

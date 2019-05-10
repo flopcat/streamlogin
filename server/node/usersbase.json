@@ -2,6 +2,7 @@
   "mystream": {
     "password": "mypassword",
     "link": "http://my.ip.addr.ess:myport/stream",
-    "text": "mp3 stream"
+    "text": "mp3 stream",
+    "rel": "audio"
   }
 }

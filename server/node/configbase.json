@@ -7,8 +7,6 @@
     "login": "LOGIN",
     "incorrect": "incorrect login",
     "success": "Please click the folowing link",
-    "username": "hackme",
-    "password": "hackme",
-    "urlDefault": "hackme",
+    "defaultText": "link",
     "urlAssignSecret": "hackme"
 }

@@ -48,13 +48,18 @@ function doLogin(req, res) {
     var ok = fields.username && fields.password &&
              (fields.username in users) &&
              users[fields.username].password === fields.password;
-    var linkOk = ok && users[fields.username].link !== '';
+    var linkOk = ok && users[fields.username].link !== ''
+                    && users[fields.username].rel === 'href';
     v.status = ok ? 'ok' : 'invalid';
     v.notice = !ok ? config.incorrect : '';
     v.message = ok && linkOk ? config.success : '';
     v.link = ok ? users[fields.username].link : '';
     if (ok && ("text" in users[fields.username])) {
       v.text = users[fields.username].text;
+    }
+    v.rel = "href";
+    if (ok && ("rel" in users[fields.username])) {
+      v.rel = users[fields.username].rel;
     }
     res.setHeader('Content-Type','application/json');
     res.end(JSON.stringify(v));
@@ -91,35 +96,19 @@ function doAssign(req, res) {
             fields.tld = req.connection.remoteAddress;
           obj.link = `http://${fields.tld}:${fields.port}/${fields.path.replace(/^\/+/g, '')}`;
         }
+        obj.rel = 'href';
+        if (typeof fields.rel !== 'undefined') {
+          obj.rel = fields.rel;
+          if (obj.rel === 'link')
+            obj.rel = 'href';
+          if (obj.rel === 'text')
+            obj.link = '#';
+        }
         console.log(obj);
         users[fields.username] = obj;
       }
     }
     console.log(users);
-  /*
-    if (fields.action === 'set' && typeof fields.username !== 'undefined') {
-      obj = {};
-      if (field.username in users)
-        obj = users[fields.username]
-      if (typeof fields.path === 'undefined')
-        fields.path = '';
-      if (typeof fields.port === 'undefined')
-        fields.port = '80';
-      if (typeof fields.tld === 'undefined')
-        fields.tld = req.connection.remoteAddress;
-      linkUrl = `http://${fields.tld}:${fields.port}/${fields.path}`;
-      if (typeof fields.link === 'string')
-        linkUrl = fields.link;
-      if (typeof fields.text === 'string')
-        linkText = fields.text;
-      if (fields.username !== 'undefined') {    
-        obj.link = linkUrl;
-        obj.text = linkText;
-        
-        users[fields.username] = obj;
-      }
-    }
-    linkUrl = config.urlDefault;*/
     res.writeHead(200, {'content-type': 'text/plain'});
     res.end();
   });
@@ -171,8 +160,6 @@ function doFile(pathname, res, filter) {
 }
 
 http.createServer(function (req, res) {
-  console.log(`${req.method} ${req.url}`);
-
   // parse URL
   const parsedUrl = url.parse(req.url);
   const urlParts = parsedUrl.pathname.split('/');
