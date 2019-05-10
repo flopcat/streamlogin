@@ -23,7 +23,7 @@ function doPost(request, response, callback) {
     var queryData = "";
     if(typeof callback !== 'function') return null;
 
-    if(request.method == 'POST') {
+    if(request.method === 'POST') {
         request.on('data', function(data) {
             queryData += data;
             if(queryData.length > 1e6) {
@@ -115,6 +115,13 @@ function doAssign(req, res) {
 }
 
 function doFile(pathname, res, filter) {
+  pathname = pathname
+    .replace(/\.{2,}/g,'')
+    .replace(/\\{1,}/g,'/')
+    .replace(/\/{2,}/g,'/')
+    .replace(/^[\u0000-\u001f]/g,'')
+    .replace(/\/$/,'')
+
   // based on the URL path, extract the file extention. e.g. .js, .doc, ...
   const ext = path.parse(pathname).ext;
   // maps file extention to MIME typere
@@ -142,8 +149,11 @@ function doFile(pathname, res, filter) {
       return;
     }
 
-    // if is a directory search for index file matching the extention
-    if (fs.statSync(pathname).isDirectory()) pathname += '/index' + ext;
+    // if is a directory search for index file
+    if (fs.statSync(pathname).isDirectory()) {
+      doFile(pathname + '/index.html', res, filter);
+      return;
+    }
 
     // read file from file system
     fs.readFile(pathname, function(err, data){
@@ -165,7 +175,7 @@ http.createServer(function (req, res) {
   const urlParts = parsedUrl.pathname.split('/');
   // extract URL path
   if (urlParts[1] === "files")
-    doFile(`files/${parsedUrl.pathname}`, res, nothing);
+    doFile(`files/${urlParts.slice(2).join('/')}`, res, nothing);
   else if (urlParts[1] === "")
     doFile('templates/index.html', res, filter);
   else if (urlParts[1] === "login")
