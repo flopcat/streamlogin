@@ -28,6 +28,9 @@
         <property name="text">
          <string>Hostname</string>
         </property>
+        <property name="buddy">
+         <cstring>remoteHostname</cstring>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -38,6 +41,9 @@
         <property name="text">
          <string>API Secret</string>
         </property>
+        <property name="buddy">
+         <cstring>remoteSecret</cstring>
+        </property>
        </widget>
       </item>
       <item row="2" column="1">
@@ -47,6 +53,9 @@
        <widget class="QLabel" name="label_9">
         <property name="text">
          <string>Port</string>
+        </property>
+        <property name="buddy">
+         <cstring>remotePort</cstring>
         </property>
        </widget>
       </item>
@@ -103,6 +112,9 @@
       <property name="text">
        <string>Username</string>
       </property>
+      <property name="buddy">
+       <cstring>remoteUsername</cstring>
+      </property>
      </widget>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
@@ -115,6 +127,9 @@
       </property>
       <property name="text">
        <string>Password</string>
+      </property>
+      <property name="buddy">
+       <cstring>remotePassword</cstring>
       </property>
      </widget>
     </widget>
@@ -129,6 +144,9 @@
        <widget class="QLabel" name="activeRelLabel">
         <property name="text">
          <string>Type</string>
+        </property>
+        <property name="buddy">
+         <cstring>activeRel</cstring>
         </property>
        </widget>
       </item>
@@ -160,6 +178,9 @@
        <widget class="QLabel" name="activeTextLabel">
         <property name="text">
          <string>Display Text</string>
+        </property>
+        <property name="buddy">
+         <cstring>activeText</cstring>
         </property>
        </widget>
       </item>
@@ -236,6 +257,9 @@
         <property name="text">
          <string>Type</string>
         </property>
+        <property name="buddy">
+         <cstring>inactiveRel</cstring>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">
@@ -266,6 +290,9 @@
        <widget class="QLabel" name="inactiveTextLabel">
         <property name="text">
          <string>Display Text</string>
+        </property>
+        <property name="buddy">
+         <cstring>inactiveText</cstring>
         </property>
        </widget>
       </item>
@@ -358,6 +385,34 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>accountsList</tabstop>
+  <tabstop>accountsAdd</tabstop>
+  <tabstop>accountsDel</tabstop>
+  <tabstop>remoteHostname</tabstop>
+  <tabstop>remotePort</tabstop>
+  <tabstop>remoteSecret</tabstop>
+  <tabstop>remoteUsername</tabstop>
+  <tabstop>remotePassword</tabstop>
+  <tabstop>activeRel</tabstop>
+  <tabstop>activeText</tabstop>
+  <tabstop>activeLinkUrl</tabstop>
+  <tabstop>activeUrl</tabstop>
+  <tabstop>activeLinkPortPath</tabstop>
+  <tabstop>activePort</tabstop>
+  <tabstop>activeLinkPath</tabstop>
+  <tabstop>activePath</tabstop>
+  <tabstop>activeIpMine</tabstop>
+  <tabstop>inactiveRel</tabstop>
+  <tabstop>inactiveText</tabstop>
+  <tabstop>inactiveLinkUrl</tabstop>
+  <tabstop>inactiveUrl</tabstop>
+  <tabstop>inactiveLinkPortPath</tabstop>
+  <tabstop>inactivePort</tabstop>
+  <tabstop>inactiveLinkPath</tabstop>
+  <tabstop>inactivePath</tabstop>
+  <tabstop>inactiveIpMine</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
